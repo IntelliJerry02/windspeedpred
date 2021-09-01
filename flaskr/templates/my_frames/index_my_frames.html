@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}我的算法框架{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('my_frames.create') }}">添加算法框架</a>
+  {% endif %}
+  <a class="action" href="{{ url_for('index_user.index') }}">返回主页</a>
+{% endblock %}
+
+{% block content %}
+  {% for frame in frames %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ frame['title'] }}</h1>
+          <div class="about">by {{ frame['username'] }} on {{ frame['created'].strftime('%Y-%m-%d') }}</div>
+        </div>
+        {% if g.user['id'] == frame['author_id'] %}
+          <a class="action" href="{{ url_for('my_frames.update', id=frame['id']) }}">编辑</a>
+        {% endif %}
+      </header>
+      <!-- <p class="body">{{ frame['directory'] }}</p> -->
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
+
+
+
+<!-- 
+
+当用户登录后， header 块添加了一个指向 create 视图的连接。
+当用户是 博客作者时，可以看到一个“ Edit ”连接，指向 update 视图。 
+loop.last 是一个 Jinja for 循环 内部可用的特殊变量，它用于在每个 博客帖子后面显示一条线来分隔帖子，最后一个帖子除外。
+
+-->

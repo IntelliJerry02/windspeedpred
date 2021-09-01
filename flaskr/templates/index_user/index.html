@@ -1,0 +1,118 @@
+{% extends 'base.html' %} 
+
+{% block header %}
+    <h1>{% block title %}主页{% endblock title %}</h1>
+    {% if g.user %}
+        {# <a class="action" href="{{ url_for('index_user.index') }}">New</a> #}
+    {% endif %}
+{% endblock header %}
+
+{% block content %}
+    <style>
+        .item {font-size: large;}
+    </style>
+
+    {% block test_data %}
+        <p>
+            <span>
+                <span class="item">选择测试数据:&nbsp;&nbsp;</span>
+                <select>
+                    <option>默认数据集</option>
+                </select>
+                <a href="{{ url_for('my_datasets.default_dataset_intro') }}">默认数据集说明</a>
+                <a href="{{ url_for('my_datasets.index') }}">我的数据集</a>
+            </span>
+        </p>
+    {% endblock test_data %}
+
+    {% block pred_time %}
+        <p>
+            <span>
+                <span class="item">选择预测时长:&nbsp;&nbsp;</span>
+                <select>
+                    <option>3个月</option>
+                </select>
+            </span>
+        </p>
+    {% endblock pred_time %}
+
+    {% block algo_frame %}
+        <p>
+            <span>
+                <span class="item">选择算法框架:&nbsp;&nbsp;</span>
+                <select>
+                    <option>默认算法框架</option>
+                </select>
+                <a href="{{ url_for('my_frames.create') }}">添加算法框架</a>
+                <a href="{{ url_for('my_frames.index') }}">我的算法框架</a>
+            </span>
+        </p>
+    {% endblock algo_frame %}
+
+    <!-- <div style="border: 2px solid black; padding: 5px;"> -->
+    <fieldset>
+        <legend>已添加的算法框架信息</legend>
+        {% for frame in frames %}
+                <article class="post">
+                <header>
+                    <div>
+                    <h1>{{ frame['title'] }}</h1>
+                    <div class="about">by {{ frame['username'] }} on {{ frame['created'].strftime('%Y-%m-%d') }}</div>
+                    </div>
+                    {% if g.user['id'] == frame['author_id'] %}
+                        <!-- <a class="action" href="{{ url_for('index_user.index', id=frame['id']) }}"><button>编辑</button></a> -->
+                        <form action="{{ url_for('index_user.delete', id=frame['id']) }}" method="post">
+                            <input class="danger" type="submit" value="删除" onclick="return confirm('Are you sure?');">
+                        </form>
+                    {% endif %}
+                </header>
+                <p class="body">{{ frame['body'] }}</p>
+                </article>
+                {% if not loop.last %}
+                <hr>
+                {% endif %}
+        {% endfor %}
+    </fieldset>
+    <!-- </div> -->
+
+    {% block cost_func %}
+        <p>
+            <span>
+                <span class="item">选择损失函数:&nbsp;&nbsp;</span>
+                <select>
+                    <option>默认损失函数</option>
+                </select>
+                <a href="{{ url_for('index_user.index') }}">损失函数说明</a>
+            </span>
+        </p>
+    {% endblock cost_func %}
+
+    {% block chart %}
+        <fieldset>
+            <legend>预测结果图表</legend>
+            <div style="height: 500px;"></div>
+        </fieldset>
+    {% endblock chart %}
+
+    {% block chart_type %}
+        <p>
+            <span>
+                <span class="item">选择图表类型：</span>
+                <input type="radio" name="chart_type">折线图
+                <input type="radio" name="chart_type">饼图
+                <input type="radio" name="chart_type">柱状图&nbsp;&nbsp;
+                <input type="submit" value="生成预测结果">
+            </span>
+        </p>
+    {% endblock chart_type %}
+{% endblock content %}
+
+
+
+<!-- 
+
+当用户登录后， header 块添加了一个指向 create 视图的连接。
+当用户是 博客作者时，可以看到一个“ Edit ”连接，指向 update 视图。 
+loop.last 是一个 Jinja for 循环 内部可用的特殊变量，它用于在每个 博客帖子后面显示一条线来分隔帖子，最后一个帖子除外。
+
+-->

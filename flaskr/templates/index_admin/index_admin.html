@@ -1,0 +1,31 @@
+{% extends 'base.html' %} 
+
+{% block header %}
+    <h1>{% block title %}管理员主页{% endblock title %}</h1>
+    {% if g.user %}
+        {# <a class="action" href="{{ url_for('index_user.index') }}">New</a> #}
+    {% endif %}
+{% endblock header %}
+
+{% block content %}
+    <p>
+        <span>
+            {% block show_users %}
+                <a href="{{ url_for('admin_page_user.index') }}"><button class="index_admin" id="show_users">用户管理</button></a>
+            {% endblock show_users %}
+
+            {% block show_datasets %}
+                <a href="{{ url_for('admin_page_dataset.index') }}"><button class="index_admin" id="show_datasets">数据集管理</button></a>
+            {% endblock show_datasets %}
+
+            {% block show_algos %}
+                <button class="index_admin" id="show_frames">预测算法管理</button>
+            {% endblock show_algos %}
+
+            {% block new_admin %}
+                <a href="{{ url_for('admin.register') }}"><button class="index_admin" id="new_admin">添加管理员账号</button></a>
+            {% endblock new_admin %}
+        </span>
+    </p>
+    <div class="index_admin" id="index_admin"></div>
+{% endblock content %}

@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}默认数据集说明{% endblock %}</h1>
+  <a class="action" href="{{ url_for('index_user.index') }}">返回主页</a>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{# New Post #}添加算法框架{% endblock %}</h1>
+  <a class="action" href="{{ url_for('index_user.index') }}">返回主页</a>
+{% endblock %}
+
+{% block content %}
+  <style>
+    td input{width: 10%;}
+    tr:first-child td{width: 5%;}
+  </style>
+  <form method="post">
+    <label for="title">算法框架名称</label>
+    <input name="title" id="title" value="{{ request.form['title'] }}" required>
+
+    <label for="directory">文件存储路径</label>
+    <input name="directory" id="directory" value="{{ request.form['directory'] }}" required>
+
+    <label for="argument_number">参数个数</label>
+    <input name="argument_number" id="argument_number" value="{{ request.form['argument_number'] }}" required>
+
+    <!-- <table>
+      <tr>
+        <td><b>算法层</b></td><td><b>参数</b></td>
+      </tr>
+      <tr>
+        <td>VMD分解</td>
+        <td>
+          alpha = <input name="alpha" id="alpha" value="{{ request.form['alpha'] }}" required>
+          tau = <input name="tau" id="tau" value="{{ request.form['tau'] }}" required>
+          K = <input name="k" id="k" value="{{ request.form['k'] }}" required>
+          DC = <input name="dc" id="dc" value="{{ request.form['dc'] }}" required>
+          <button>更多</button>
+        </td>
+      </tr>
+      <tr>
+        <td>CNN</td>
+        <td>
+          cnnfilter = <input name="cnnfilter" id="cnnfilter" value="{{ request.form['cnnfilter'] }}" required>
+          kernel_size = <input name="kernel_size" id="kernel_size" value="{{ request.form['kernel_size'] }}" required>
+          <button>更多</button>
+        </td>
+      </tr>
+    </table> -->
+
+    <!-- <label for="body">算法框架说明</label>
+    <textarea name="body" id="body">{{ request.form['body'] }}</textarea>
+
+    <label for="framefile">上传文件</label>
+    <input name="framefile" id="framefile" type="file"> -->
+    
+    <input type="submit" value="保存">
+  </form>
+  <button><a href="#">添加算法</a></button>
+{% endblock %}

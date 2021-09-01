@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}正在编辑 "{{ dataset['title'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form class="text-center" class="form-inline" role="form">
+  <div>
+    <label for="title">数据集名称</label><br>
+    <input type="text" name="title" value="{{ request.form['title'] }}" required><br><p></p>
+
+    <label for="dataset_type">
+      选择数据集类型(支持 .xxx .xxx格式)
+    </label><br><p></p>
+    <input type="text" name="dataset_type" value="{{ request.form['dataset_type'] }}" required>(仅时间/仅空间/时空数据)
+    <!-- <span>
+      <input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="{{ request.form['dataset_type'] }}"> 仅时间
+      <input type="radio" name="optionsRadiosinline" id="optionsRadios4" value="{{ request.form['dataset_type'] }}"> 仅空间
+      <input type="radio" name="optionsRadiosinline" id="optionsRadios5" value="{{ request.form['dataset_type'] }}"> 时空数据
+    </span>&nbsp;&nbsp; -->
+    <a href="#">数据类型说明</a>
+
+    <label for="source">数据来源地</label>
+    <input type="text" name="source" value="{{ request.form['source'] }}" required>
+
+    <label for="time_interval">时间间隔</label>
+    <input type="text" name="time_interval" value="{{ request.form['time_interval'] }}" required>
+
+    <label for="space_interval">空间间隔</label>
+    <input type="text" name="space_interval" value="{{ request.form['space_interval'] }}" required>
+
+    <label for="data_number">数据个数</label>
+    <input type="text" name="data_number" value="{{ request.form['data_number'] }}" required>
+  </div>
+  <input type="submit" value="保存">
+</form>
+{% endblock %}
+
+<!-- 
+
+这个模板有两个表单。第一个提交已编辑过的数据给当前页面（ /<id>/update ）。 
+另一个表单只包含一个按钮。它指定一个 action 属性，指向删除视图。
+这个按钮 使用了一些 JavaScript 用以在提交前显示一个确认对话框。
+
+参数  request.form['title'] or post['title']  用于选择在表单显示什么 数据。
+当表单还未提交时，显示原 post 数据。
+但是，如果提交了非法数据，然后 需要显示这些非法数据以便于用户修改时，就显示 request.form 中的数据。 
+request 是又一个自动在模板中可用的变量。 
+
+-->

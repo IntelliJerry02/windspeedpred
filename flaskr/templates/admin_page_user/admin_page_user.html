@@ -1,0 +1,56 @@
+{% extends 'base.html' %} 
+
+{% block header %}
+    <h1>{% block title %}用户管理{% endblock title %}</h1>
+    {% if g.user %}
+        {# <a class="action" href="{{ url_for('index_user.index') }}">New</a> #}
+    {% endif %}
+{% endblock header %}
+
+{% block content %}
+    <style>
+        .item {font-size: large;}
+    </style>
+
+    <!-- <div style="border: 2px solid black; padding: 5px;"> -->
+    <!-- <fieldset>
+        <legend></legend> -->
+        {% for user in users %}
+                <article class="post">
+                <header>
+                    <div>
+                    <h1>{{ user['username'] }}</h1>
+                    <a href="{{ url_for('admin_page_user.update', id=user['id']) }}"><button>编辑</button></a>
+                    <form action="{{ url_for('admin_page_user.delete', id=user['id']) }}" method="post" style="width: 45px;">
+                        <input class="danger" type="submit" value="删除" onclick="return confirm('确定要删除吗?');">
+                    </form>
+                    <div class="about">用户类型：{{ user['usertype'] }}</div>
+                    <div class="about">密码：{{ user['password'] }}</div>
+                    </div>
+                    {#
+                        {% if g.user['id'] == frame['author_id'] %}
+                            <!-- <a class="action" href="{{ url_for('index_user.index', id=frame['id']) }}"><button>编辑</button></a> -->
+                            <form action="{{ url_for('index_user.delete', id=frame['id']) }}" method="post">
+                                <input class="danger" type="submit" value="删除" onclick="return confirm('Are you sure?');">
+                            </form>
+                        {% endif %}
+                    #}
+                </header>
+                </article>
+                {% if not loop.last %}
+                <hr>
+                {% endif %}
+        {% endfor %}
+    <!-- </fieldset> -->
+    <!-- </div> -->
+{% endblock content %}
+
+
+
+<!-- 
+
+当用户登录后， header 块添加了一个指向 create 视图的连接。
+当用户是 博客作者时，可以看到一个“ Edit ”连接，指向 update 视图。 
+loop.last 是一个 Jinja for 循环 内部可用的特殊变量，它用于在每个 博客帖子后面显示一条线来分隔帖子，最后一个帖子除外。
+
+-->
